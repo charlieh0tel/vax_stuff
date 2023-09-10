@@ -1,0 +1,38 @@
+#!/usr/bin/expect 
+
+set timeout -1
+
+source lib.tcl
+
+spawn vax install.ini
+
+expect ">>>"
+send "boot mua0:\r"
+
+expect "="
+send "copy\r"
+expect "From: "
+send "tms(0,1)\r"
+expect "To: "
+send "ra(0,1)\r"
+
+expect "="
+send "boot\r"
+
+expect "Boot"
+expect ": "
+send "ra(0,1)vmunix\r"
+
+expect "root device? "
+send "ra0*\r"
+
+shell_cmd "disklabel -rw ra0 ra92 \"Quasijarus\" /usr/mdec/rdboot /usr/mdec/bootra"
+
+shell_cmd "disk=ra0 type=ra92 tape=tms xtr"
+
+shell_cmd "sync"
+shell_cmd "sync"
+shell_cmd "sync"
+
+send ""
+expect "sim> "
