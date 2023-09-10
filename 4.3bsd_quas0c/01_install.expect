@@ -6,7 +6,10 @@ source lib.tcl
 
 spawn vax boot.ini
 
-expect "Automatic reboot failed... help!"
+expect {
+    "Device? " {send "dua0\r"; exp_continue}
+    "Automatic reboot failed... help!"
+}
 
 shell_cmd "newfs ra0g ra92"
 shell_cmd "newfs ra0h ra92"
