@@ -38,5 +38,5 @@ usr.tar: gzcompat
 
 clean:
 	rm -f gzcompat miniroot rootdump src.tar srcsys.tar stand \
-	  usr.tar quas.tap
+	  usr.tar quas.tap quas.ra92* nvram.dat
 .PHONY: clean
