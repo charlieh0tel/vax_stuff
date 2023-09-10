@@ -4,37 +4,38 @@ WGET_OPTS=--quiet -O -
 
 all: quas.tap
 
-quas.tap: mkdisttap.pl miniroot rootdump src.tar srcsys.tar \
-  stand usr.tar
+quas.tap: mkdisttap.pl \
+	miniroot rootdump src.tar srcsys.tar stand usr.tar
 	./mkdisttap.pl > quas.tap
-.DELETE_ON_ERROR: quas.tap
+.DELETE_ON_ERROdR: quas.tap
 
 gzcompat: gzcompat.c
 	gcc -o gzcompat gzcompat.c
 
-miniroot: gzcompat
+miniroot: miniroot.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 .DELETE_ON_ERROR: miniroot
 
-rootdump: gzcompat
+rootdump: rootdump.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
-.DELETE_ON_ERROR: rootduvmp
+.DELETE_ON_ERROR: rootdump
 
-src.tar: gzcompat
+src.tar: src.tar.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 .DELETE_ON_ERROR: src.tar
 
-srcsys.tar: gzcompat
+srcsys.tar: srcsys.tar.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 .DELETE_ON_ERROR: srcsys.tar
 
-stand: gzcompat
+stand: stand.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 .DELETE_ON_ERROR: stand
 
-usr.tar: gzcompat
+usr.tar: usr.tar.Z
 	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 .DELETE_ON_ERROR: usr.tar
+
 
 clean:
 	rm -f gzcompat miniroot rootdump src.tar srcsys.tar stand \
