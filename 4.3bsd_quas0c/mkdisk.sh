@@ -1,10 +1,19 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+
 ncyl=3099
 sec_per_cyl=$((73 * 13))
-disk_size=$((ncyl * sec_per_cyl * 512))
+nsec=$((ncyl * sec_per_cyl))
+disk_size=$((nsec * 512))
 
-rm -f quas.ra92
-touch quas.ra92
-fallocate -z -l ${disk_size} quas.ra92
+echo "ncyl=$ncyl"
+echo "sec_per_cyl=$sec_per_cyl"
+echo "nsec=$nsec"
+echo "bytes=$disk_size"
+
+rm -f "$1"
+touch "$1"
+fallocate -z -l ${disk_size} "$1"
 	    

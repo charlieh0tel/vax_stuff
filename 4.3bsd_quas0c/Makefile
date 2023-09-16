@@ -1,30 +1,26 @@
-Q=https://github.com/dugoh/auto-quas/raw/6ebf0b781fd23541fd1d179335381d82c767bb4b/4.3BSD-Quasijarus0c
+Q:=https://github.com/dugoh/auto-quas/raw/6ebf0b781fd23541fd1d179335381d82c767bb4b/4.3BSD-Quasijarus0c
 
-WGET_OPTS=--quiet -O -
+TAPE_SECTIONS:=miniroot rootdump src.tar srcsys.tar stand usr.tar
 
-all: quas.tap
+all: quas.ra92
 .PHONY: all
 
-quas.tap: mkdisttap.pl \
-	miniroot rootdump src.tar srcsys.tar stand usr.tar
-	./mkdisttap.pl > quas.tap
+quas.ra92: ./mkdisk.sh ./00_install.expect ./01_install.expect quas.tap
+	./mkdisk.sh $@
+	./00_install.expect
+	./01_install.expect
 
 gzcompat: gzcompat.c
 	gcc -o gzcompat gzcompat.c
 
-miniroot: miniroot.Z
-rootdump: rootdump.Z
-src.tar: src.tar.Z
-srcsys.tar: srcsys.tar.Z
-stand: stand.Z
-usr.tar: usr.tar.Z
+$(TAPE_SECTIONS): gzcompat
+	wget --quiet -O - $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
 
-%:%.Z gzcompat
-	wget $(WGET_OPTS) $(Q)/$@.Z | ./gzcompat | gzip -dc > $@
+quas.tap: mkdisttap.pl $(TAPE_SECTIONS)
+	./mkdisttap.pl > quas.tap
 
 clean:
-	rm -f gzcompat miniroot rootdump src.tar srcsys.tar stand \
-	  usr.tar quas.tap quas.ra92* nvram.dat
+	rm -f gzcompat quas.tap quas.ra92* nvram.dat $(TAPE_SECTIONS) 
 .PHONY: clean
 
 .DELETE_ON_ERROR:

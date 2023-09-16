@@ -48,4 +48,3 @@ shell_cmd "sync"
 shell_cmd "sync"
 
 halt
-
