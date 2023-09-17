@@ -1,6 +1,7 @@
-#!/usr/bin/expect 
+#!/usr/bin/expect -f
 
 set timeout -1
+set disk_type [lindex $argv 0];
 
 source lib.tcl
 
@@ -26,7 +27,7 @@ send "ra(0,1)vmunix\r"
 expect "root device? "
 send "ra0*\r"
 
-shell_cmd "disklabel -rw ra0 ra92 \"Quasijarus\" /usr/mdec/rdboot /usr/mdec/bootra"
+shell_cmd "disklabel -rw ra0 $disk_type \"Quasijarus\" /usr/mdec/rdboot /usr/mdec/bootra"
 
 shell_cmd "disk=ra0 type=ra92 tape=tms xtr"
 

@@ -3,17 +3,41 @@
 set -o errexit
 set -o nounset
 
-ncyl=3099
-sec_per_cyl=$((73 * 13))
-nsec=$((ncyl * sec_per_cyl))
-disk_size=$((nsec * 512))
+type="$1"
+file="$2"
 
-echo "ncyl=$ncyl"
-echo "sec_per_cyl=$sec_per_cyl"
-echo "nsec=$nsec"
-echo "bytes=$disk_size"
+case "${type}" in
+    ra81)
+	ns=51
+	nt=14
+	nc=1248
+	;;
+    ra82)
+	ns=57
+	nt=15
+	nc=1423
+	;;
+    ra92)
+	ns=69
+	nt=13
+	nc=3279
+	;;
+    *)
+	echo "$0: unknown type ${type}"
+	exit 1
+	;;
+esac
 
-rm -f "$1"
-touch "$1"
-fallocate -z -l ${disk_size} "$1"
+nsectors=$((ns * nt * nc))
+disk_size=$((nsectors * 512))
+
+echo "ns=${ns}"
+echo "nt=${nt}"
+echo "nc=${nc}"
+echo "#sectors=${nsectors}"
+echo "disk_size=${disk_size}"
+
+rm -f "${file}"
+touch "${file}"
+fallocate -z -l ${disk_size} "${file}"
 	    

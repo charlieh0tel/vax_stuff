@@ -1,6 +1,7 @@
-#!/usr/bin/expect 
+#!/usr/bin/expect -f
 
 set timeout -1
+set disk_type [lindex $argv 0];
 
 source lib.tcl
 
@@ -11,8 +12,8 @@ expect {
     "Automatic reboot failed... help!"
 }
 
-shell_cmd "newfs ra0g ra92"
-shell_cmd "newfs ra0h ra92"
+shell_cmd "newfs ra0g $disk_type"
+shell_cmd "newfs ra0h $disk_type"
 shell_cmd "mkdir /home"
 shell_cmd "mount /dev/ra0g /usr"
 shell_cmd "cd /dev"
