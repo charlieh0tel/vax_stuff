@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+set disk_type [lindex $argv 0];
+
+source lib.tcl
+
+spawn vax install.ini
+
+expect ">>>"
+send "boot dua1:\r"
+
+
+#send ""
+#expect "sim> "

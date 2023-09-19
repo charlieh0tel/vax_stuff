@@ -1,0 +1,5 @@
+nvram.dat
+*.iso
+boot.ini
+install.ini
+*.ra92

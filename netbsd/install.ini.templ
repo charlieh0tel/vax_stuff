@@ -1,0 +1,16 @@
+set cpu 64m
+set cr dis
+set lpt dis
+set rl dis
+set ry dis
+set ts dis
+set xq dis
+set rq0 %DISK_TYPE%
+att rq0 netbsd.%DISK_TYPE%
+set rq1 cdrom
+att rq1 %ISO%
+set rq2 dis
+set rq3 dis
+set tti 7b
+set tto 7b
+boot cpu
