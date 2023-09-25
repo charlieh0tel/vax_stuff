@@ -1,4 +1,6 @@
-set cpu 64m
+set cpu 4g
+att nvr nvram.dat
+
 set cr dis
 set lpt dis
 set rl dis
@@ -10,9 +12,8 @@ att rq0 netbsd.%DISK_TYPE%
 set rq1 dis
 set rq2 dis
 set rq3 dis
-att tq0 quas.tap
-set tti 7b
-set tto 7b
-att nvr nvram.dat
+set xq ena type=delqa
+attach xq tap0
+
 dep bdr 1
 boot cpu

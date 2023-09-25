@@ -1,4 +1,6 @@
-set cpu 64m
+set cpu 4g
+att nvr nvram.dat
+
 set cr dis
 set lpt dis
 set rl dis
@@ -11,6 +13,7 @@ set rq1 cdrom
 att rq1 %ISO%
 set rq2 dis
 set rq3 dis
-set tti 7b
-set tto 7b
+set xq ena type=delqa
+attach xq tap0
+
 boot cpu

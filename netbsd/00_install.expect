@@ -7,9 +7,13 @@ source lib.tcl
 
 spawn vax install.ini
 
+expect "Performing normal system tests."
+expect "Tests completed."
+
 expect ">>>"
 send "boot dua1:\r"
 
+interact
 
 #send ""
 #expect "sim> "
